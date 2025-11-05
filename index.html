@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무라카</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <img src="images/logo.png" alt="무라카 로고" class="logo">
+            <nav class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#channel" class="nav-link">채널바로가기</a>
+                <a href="#about" class="nav-link">오픈채팅방이란?</a>
+                <a href="#recommend" class="nav-link">추천하시는 분</a>
+                <a href="https://open.kakao.com/o/glKQQQXg" class="nav-link kakao-link" target="_blank">오픈채팅방 바로가기</a>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+        <div class="mobile-menu-content">
+            <button class="mobile-menu-close" id="mobileMenuClose">×</button>
+            <nav class="mobile-nav">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#channel" class="mobile-nav-link">채널바로가기</a>
+                <a href="#about" class="mobile-nav-link">오픈채팅방이란?</a>
+                <a href="#recommend" class="mobile-nav-link">추천하시는 분</a>
+                <a href="https://open.kakao.com/o/glKQQQXg" class="mobile-nav-link kakao-link-mobile" target="_blank">오픈채팅방 바로가기</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 히어로 섹션 -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="images/hero.png" alt="Hero" class="hero-image">
+                <a href="https://open.kakao.com/o/glKQQQXg" class="transparent-button hero-button" target="_blank"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 채널바로가기 섹션 -->
+    <section id="channel" class="channel-section">
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="images/top.png" alt="채널바로가기" class="section-image">
+                <a href="https://open.kakao.com/o/glKQQQXg" class="transparent-button channel-button" target="_blank"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top5 섹션 -->
+    <section class="top5-section">
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="images/top5.png" alt="Top5" class="top5-image">
+                <a href="https://open.kakao.com/o/glKQQQXg" class="transparent-button top5-button" target="_blank"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 오픈채팅방이란? 섹션 -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="images/top2.png" alt="오픈채팅방이란?" class="section-image">
+                <a href="https://open.kakao.com/o/glKQQQXg" class="transparent-button about-button" target="_blank"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 추천하시는 분 섹션 -->
+    <section id="recommend" class="recommend-section">
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="images/top4.png" alt="추천하시는 분" class="section-image">
+                <a href="https://open.kakao.com/o/glKQQQXg" class="transparent-button recommend-button" target="_blank"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 탑 아이콘 (맨 위로 가기) -->
+    <button class="top-button" id="topButton" title="맨 위로">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4L4 12H8V20H16V12H20L12 4Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- 오픈채팅방 버튼 -->
+    <a href="https://open.kakao.com/o/glKQQQXg" class="kakao-chat-button" target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3C6.48 3 2 6.48 2 11C2 13.5 3.26 15.74 5.29 17.18L4.5 20.5L8.5 19.5C9.57 19.82 10.76 20 12 20C17.52 20 22 16.52 22 12C22 7.48 17.52 4 12 4V3Z" fill="#3C1E1E"/>
+        </svg>
+        <span>오픈채팅방 연결하기</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
