@@ -1,19 +1,128 @@
-// 헤더 스크롤 이벤트 및 탑 버튼 표시
+// 헤더 스크롤 이벤트
 window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
-    const topButton = document.getElementById('topButton');
     
     if (window.scrollY > 50) {
         header.classList.add('scrolled');
-        if (topButton) {
-            topButton.classList.add('show');
-        }
     } else {
         header.classList.remove('scrolled');
-        if (topButton) {
-            topButton.classList.remove('show');
-        }
     }
+});
+
+// 히어로 섹션 이미지 슬라이드 전역 변수
+let heroSlideInterval = null;
+let heroCurrentSlide = 0;
+
+// 히어로 섹션 이미지 슬라이드 초기화
+function initHeroSlider() {
+    const heroBackground = document.getElementById('heroBackground');
+    const heroSection = document.querySelector('.hero-section');
+    if (!heroBackground || !heroSection) return;
+    
+    // 기존 interval 정리
+    if (heroSlideInterval) {
+        clearInterval(heroSlideInterval);
+        heroSlideInterval = null;
+    }
+    
+    // 기존 슬라이드 제거
+    heroBackground.innerHTML = '';
+    
+    // 모바일 여부 확인
+    const isMobile = window.innerWidth <= 768;
+    
+    // 이미지 개수 설정 (모바일: 2개, PC: 4개)
+    const imageCount = isMobile ? 2 : 4;
+    
+    // 모바일에서 이미지 비율 계산하여 높이 조정
+    if (isMobile) {
+        const firstImagePath = `images/h-1-m.png`;
+        const img = new Image();
+        img.onload = function() {
+            const imageRatio = img.height / img.width;
+            const sectionWidth = heroSection.offsetWidth || window.innerWidth;
+            const calculatedHeight = sectionWidth * imageRatio;
+            
+            // 계산된 높이로 섹션 높이 설정
+            heroSection.style.height = `${calculatedHeight}px`;
+            heroSection.style.minHeight = `${calculatedHeight}px`;
+        };
+        img.src = firstImagePath;
+    } else {
+        // PC에서는 기본 높이 유지
+        heroSection.style.height = '';
+        heroSection.style.minHeight = '';
+    }
+    
+    // 슬라이드 생성
+    for (let i = 1; i <= imageCount; i++) {
+        const slide = document.createElement('div');
+        slide.className = 'hero-slide';
+        if (i === 1) {
+            slide.classList.add('active');
+        }
+        
+        // 모바일이면 -m.png (h-1-m, h-2-m만), PC면 .png (h-1 ~ h-4)
+        const imagePath = isMobile 
+            ? `images/h-${i}-m.png` 
+            : `images/h-${i}.png`;
+        
+        slide.style.backgroundImage = `url('${imagePath}')`;
+        heroBackground.appendChild(slide);
+    }
+    
+    // 슬라이드 전환 로직
+    const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length === 0) return;
+    
+    heroCurrentSlide = 0;
+    const slideInterval = 2500; // 2.5초
+    
+    function showNextSlide() {
+        // 현재 슬라이드 제거
+        slides[heroCurrentSlide].classList.remove('active');
+        
+        // 다음 슬라이드로 이동
+        heroCurrentSlide = (heroCurrentSlide + 1) % slides.length;
+        
+        // 다음 슬라이드 표시
+        slides[heroCurrentSlide].classList.add('active');
+    }
+    
+    // 2.5초마다 슬라이드 전환
+    heroSlideInterval = setInterval(showNextSlide, slideInterval);
+}
+
+// 화면 크기 변경 시 이미지 재설정 및 높이 재계산
+let resizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+        const heroSection = document.querySelector('.hero-section');
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile && heroSection) {
+            // 모바일에서 이미지 비율로 높이 재계산
+            const firstImagePath = `images/h-1-m.png`;
+            const img = new Image();
+            img.onload = function() {
+                const imageRatio = img.height / img.width;
+                const sectionWidth = heroSection.offsetWidth || window.innerWidth;
+                const calculatedHeight = sectionWidth * imageRatio;
+                
+                heroSection.style.height = `${calculatedHeight}px`;
+                heroSection.style.minHeight = `${calculatedHeight}px`;
+            };
+            img.src = firstImagePath;
+        } else if (heroSection) {
+            // PC에서는 기본 높이로 복원
+            heroSection.style.height = '';
+            heroSection.style.minHeight = '';
+        }
+        
+        // 슬라이더 재초기화
+        initHeroSlider();
+    }, 250);
 });
 
 // 모바일 메뉴 토글
@@ -55,233 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 탑 버튼 클릭 시 맨 위로 스크롤
-    const topButton = document.getElementById('topButton');
-    if (topButton) {
-        topButton.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-    
-    // 영상 무한재생 보장
-    const desktopVideo = document.querySelector('.hero-video-desktop');
-    const mobileVideo = document.querySelector('.hero-video-mobile');
-    
-    if (desktopVideo) {
-        desktopVideo.loop = true;
-        desktopVideo.play();
-    }
-    
-    if (mobileVideo) {
-        mobileVideo.loop = true;
-        mobileVideo.play();
-    }
-    
-    // 빵 이미지 카드 슬라이더 초기화
-    initBreadSlider();
+    // 히어로 섹션 슬라이더 초기화
+    initHeroSlider();
 });
 
-// 빵 이미지 카드 슬라이더 초기화 함수
-function initBreadSlider() {
-    const sliderTrack = document.getElementById('breadSliderTrack');
-    if (!sliderTrack) return;
-    
-    // brad 폴더의 이미지 파일들 (d1.jpg ~ d20.jpg)
-    const imageFiles = [];
-    for (let i = 1; i <= 20; i++) {
-        imageFiles.push(`images/brad/d${i}.jpg`);
-    }
-    
-    // 이미지를 두 번 복제하여 무한 스크롤 효과 생성
-    const allImages = [...imageFiles, ...imageFiles];
-    
-    // 카드 생성
-    allImages.forEach((imagePath, index) => {
-        const card = document.createElement('div');
-        card.className = 'bread-card';
-        
-        const img = document.createElement('img');
-        img.src = imagePath;
-        img.alt = `빵 이미지 ${index + 1}`;
-        img.loading = 'lazy';
-        
-        card.appendChild(img);
-        sliderTrack.appendChild(card);
-    });
-    
-    // 슬라이더 초기화
-    initSlider(sliderTrack);
-}
-
-// 슬라이더 초기화 (터치 및 자동 슬라이드)
-function initSlider(sliderTrack) {
-    let isDragging = false;
-    let startX = 0;
-    let currentX = 0;
-    let translateX = 0;
-    let animationId = null;
-    let lastTranslate = 0;
-    let velocity = 0;
-    let lastTime = 0;
-    let lastX = 0;
-    
-    // 모바일 감지
-    const isMobile = window.innerWidth <= 1024;
-    
-    // 카드 너비 계산
-    function getCardWidth() {
-        const firstCard = sliderTrack.querySelector('.bread-card');
-        if (firstCard) {
-            const style = window.getComputedStyle(firstCard);
-            const width = firstCard.offsetWidth;
-            const gap = parseInt(window.getComputedStyle(sliderTrack).gap) || 20;
-            return width + gap;
-        }
-        return 250; // 기본값
-    }
-    
-    // 전체 트랙 너비 계산
-    function getTotalWidth() {
-        const cards = sliderTrack.querySelectorAll('.bread-card');
-        const cardWidth = getCardWidth();
-        return cards.length * cardWidth;
-    }
-    
-    // 자동 슬라이드 애니메이션
-    function startAutoSlide() {
-        if (isDragging || !sliderTrack.classList.contains('auto-slide')) return;
-        
-        const totalWidth = getTotalWidth();
-        const halfWidth = totalWidth / 2;
-        const speed = isMobile ? 2 : 1; // 모바일이면 더 빠르게 (픽셀/프레임)
-        
-        function animate() {
-            if (isDragging || !sliderTrack.classList.contains('auto-slide')) {
-                return;
-            }
-            
-            translateX -= speed;
-            lastTranslate = translateX;
-            
-            // 절반 지나면 처음으로 리셋
-            if (Math.abs(translateX) >= halfWidth) {
-                translateX = 0;
-                lastTranslate = 0;
-            }
-            
-            sliderTrack.style.transform = `translateX(${translateX}px)`;
-            animationId = requestAnimationFrame(animate);
-        }
-        
-        animationId = requestAnimationFrame(animate);
-    }
-    
-    // 터치 시작
-    function handleStart(e) {
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        
-        startX = clientX;
-        lastX = clientX;
-        lastTime = Date.now();
-        isDragging = true;
-        velocity = 0;
-        
-        // 자동 슬라이드 중지
-        sliderTrack.classList.remove('auto-slide');
-        if (animationId) {
-            cancelAnimationFrame(animationId);
-            animationId = null;
-        }
-        
-        // 현재 위치 가져오기
-        const computedStyle = window.getComputedStyle(sliderTrack);
-        const matrix = computedStyle.transform;
-        if (matrix && matrix !== 'none') {
-            const values = matrix.match(/matrix.*\((.+)\)/);
-            if (values) {
-                const nums = values[1].split(', ');
-                translateX = parseFloat(nums[4] || nums[12] || 0);
-                lastTranslate = translateX;
-            }
-        }
-        
-        sliderTrack.classList.add('dragging');
-        
-        if (!e.touches) {
-            e.preventDefault();
-        }
-    }
-    
-    // 터치 이동
-    function handleMove(e) {
-        if (!isDragging) return;
-        
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const currentTime = Date.now();
-        const deltaTime = currentTime - lastTime;
-        
-        if (deltaTime > 0) {
-            velocity = (clientX - lastX) / deltaTime;
-        }
-        
-        currentX = clientX;
-        const diff = currentX - startX;
-        translateX = lastTranslate + diff;
-        
-        sliderTrack.style.transform = `translateX(${translateX}px)`;
-        
-        lastX = clientX;
-        lastTime = currentTime;
-        
-        if (!e.touches && e.cancelable) {
-            e.preventDefault();
-        }
-    }
-    
-    // 터치 종료
-    function handleEnd() {
-        if (!isDragging) return;
-        
-        isDragging = false;
-        lastTranslate = translateX;
-        sliderTrack.classList.remove('dragging');
-        
-        // 관성 효과 (선택사항)
-        // velocity를 사용하여 관성 스크롤 구현 가능
-        
-        // 자동 슬라이드 재시작
-        setTimeout(() => {
-            sliderTrack.classList.add('auto-slide');
-            startAutoSlide();
-        }, 100);
-    }
-    
-    // 이벤트 리스너 추가
-    sliderTrack.addEventListener('touchstart', handleStart, { passive: true });
-    sliderTrack.addEventListener('touchmove', handleMove, { passive: false });
-    sliderTrack.addEventListener('touchend', handleEnd, { passive: true });
-    sliderTrack.addEventListener('touchcancel', handleEnd, { passive: true });
-    
-    // 마우스 이벤트 (데스크톱)
-    sliderTrack.addEventListener('mousedown', handleStart);
-    document.addEventListener('mousemove', handleMove);
-    document.addEventListener('mouseup', handleEnd);
-    
-    // 자동 슬라이드 시작
-    sliderTrack.classList.add('auto-slide');
-    startAutoSlide();
-    
-    // 호버 시 일시정지 (데스크톱)
-    if (!isMobile) {
-        sliderTrack.addEventListener('mouseenter', () => {
-            sliderTrack.classList.remove('auto-slide');
-        });
-        sliderTrack.addEventListener('mouseleave', () => {
-            sliderTrack.classList.add('auto-slide');
-            startAutoSlide();
-        });
-    }
-}
