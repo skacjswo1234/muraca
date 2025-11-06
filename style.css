@@ -454,10 +454,20 @@ body {
     gap: 20px;
     animation: slide 30s linear infinite;
     will-change: transform;
+    touch-action: pan-y;
 }
 
 .bread-slider-track:hover {
     animation-play-state: paused;
+}
+
+.bread-slider-track.dragging {
+    animation-play-state: paused;
+    cursor: grabbing;
+}
+
+.bread-slider-track.draggable {
+    cursor: grab;
 }
 
 .bread-card {
