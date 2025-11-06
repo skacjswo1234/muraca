@@ -79,4 +79,36 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileVideo.loop = true;
         mobileVideo.play();
     }
+    
+    // 빵 이미지 카드 슬라이더 초기화
+    initBreadSlider();
 });
+
+// 빵 이미지 카드 슬라이더 초기화 함수
+function initBreadSlider() {
+    const sliderTrack = document.getElementById('breadSliderTrack');
+    if (!sliderTrack) return;
+    
+    // brad 폴더의 이미지 파일들 (d1.jpg ~ d20.jpg)
+    const imageFiles = [];
+    for (let i = 1; i <= 20; i++) {
+        imageFiles.push(`images/brad/d${i}.jpg`);
+    }
+    
+    // 이미지를 두 번 복제하여 무한 스크롤 효과 생성
+    const allImages = [...imageFiles, ...imageFiles];
+    
+    // 카드 생성
+    allImages.forEach((imagePath, index) => {
+        const card = document.createElement('div');
+        card.className = 'bread-card';
+        
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = `빵 이미지 ${index + 1}`;
+        img.loading = 'lazy';
+        
+        card.appendChild(img);
+        sliderTrack.appendChild(card);
+    });
+}

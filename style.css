@@ -332,6 +332,15 @@ body {
     height: 200px;
 }
 
+/* Top6 섹션 버튼 (중앙 하단) */
+.top6-button {
+    bottom: 5%;
+    left: 55%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 250px;
+}
+
 /* Top5 섹션 */
 .top5-section {
     background-color: #fff;
@@ -371,6 +380,12 @@ body {
 .recommend-section {
     background-color: #fff;
     width: 100%;
+}
+
+/* Top6 섹션 */
+.top6-section {
+    background-color: #fff;
+    width: 100%;
     padding-bottom: 80px;
 }
 
@@ -385,6 +400,169 @@ body {
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* 빵 이미지 카드 슬라이더 섹션 */
+.bread-slider-section {
+    width: 100%;
+    background-color: #fff;
+    padding: 60px 0;
+    overflow: hidden;
+}
+
+.bread-slider-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.bread-view-button {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+.bread-view-button:hover {
+    background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+}
+
+.bread-view-button:active {
+    transform: translateY(-1px);
+}
+
+.bread-slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.bread-slider-track {
+    display: flex;
+    gap: 20px;
+    animation: slide 30s linear infinite;
+    will-change: transform;
+}
+
+.bread-slider-track:hover {
+    animation-play-state: paused;
+}
+
+.bread-card {
+    flex: 0 0 calc(20% - 16px);
+    min-width: calc(20% - 16px);
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bread-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.bread-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* 반응형 디자인 - 빵 슬라이더 */
+@media (max-width: 1400px) {
+    .bread-card {
+        flex: 0 0 calc(25% - 15px);
+        min-width: calc(25% - 15px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .bread-card {
+        flex: 0 0 calc(33.333% - 14px);
+        min-width: calc(33.333% - 14px);
+    }
+    
+    .bread-card img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bread-slider-section {
+        padding: 40px 0;
+    }
+    
+    .bread-slider-header {
+        margin-bottom: 30px;
+        padding: 0 20px;
+    }
+    
+    .bread-view-button {
+        padding: 14px 32px;
+        font-size: 1rem;
+    }
+    
+    .bread-card {
+        flex: 0 0 calc(50% - 10px);
+        min-width: calc(50% - 10px);
+    }
+    
+    .bread-card img {
+        height: 200px;
+    }
+    
+    .bread-slider-track {
+        gap: 15px;
+        animation: slide 10s linear infinite;
+    }
+}
+
+@media (max-width: 480px) {
+    .bread-slider-header {
+        margin-bottom: 25px;
+        padding: 0 15px;
+    }
+    
+    .bread-view-button {
+        padding: 12px 28px;
+        font-size: 0.95rem;
+    }
+    
+    .bread-card {
+        flex: 0 0 calc(100% - 20px);
+        min-width: calc(100% - 20px);
+    }
+    
+    .bread-card img {
+        height: 250px;
+    }
+    
+    .bread-slider-track {
+        animation: slide 10s linear infinite;
+    }
 }
 
 /* 섹션 공통 스타일 */
@@ -572,11 +750,18 @@ html {
     /* Top5 섹션 버튼 모바일 크기 */
     .top5-button {
         width: 280px;
-        height: 180px;
+        height: 150px;
+    }
+    
+    /* Top6 섹션 버튼 모바일 크기 */
+    .top6-button {
+        width: 300px;
+        height: 30px;
+        bottom: 5%;
     }
     
     /* 모바일에서 마지막 섹션 하단 여백 추가 */
-    .recommend-section {
+    .top6-section {
         padding-bottom: 100px;
     }
 }
