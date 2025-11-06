@@ -452,18 +452,18 @@ body {
 .bread-slider-track {
     display: flex;
     gap: 20px;
-    animation: slide 30s linear infinite;
     will-change: transform;
-    touch-action: pan-y;
+    transition: transform 0.1s ease-out;
 }
 
-.bread-slider-track:hover {
-    animation-play-state: paused;
+.bread-slider-track.auto-slide {
+    /* JavaScript로 제어 */
 }
 
 .bread-slider-track.dragging {
-    animation-play-state: paused;
+    animation: none !important;
     cursor: grabbing;
+    transition: none;
 }
 
 .bread-slider-track.draggable {
@@ -546,7 +546,7 @@ body {
     
     .bread-slider-track {
         gap: 15px;
-        animation: slide 10s linear infinite;
+        touch-action: pan-x;
     }
 }
 
@@ -571,7 +571,7 @@ body {
     }
     
     .bread-slider-track {
-        animation: slide 10s linear infinite;
+        touch-action: pan-x;
     }
 }
 

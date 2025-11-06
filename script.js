@@ -112,115 +112,176 @@ function initBreadSlider() {
         sliderTrack.appendChild(card);
     });
     
-    // 모바일 터치 스와이프 기능 추가
-    initTouchSlider(sliderTrack);
+    // 슬라이더 초기화
+    initSlider(sliderTrack);
 }
 
-// 터치 스와이프 기능 초기화
-function initTouchSlider(sliderTrack) {
+// 슬라이더 초기화 (터치 및 자동 슬라이드)
+function initSlider(sliderTrack) {
     let isDragging = false;
     let startX = 0;
     let currentX = 0;
-    let initialTranslate = 0;
-    let currentTranslate = 0;
-    let animationStartTime = 0;
-    let animationProgress = 0;
+    let translateX = 0;
+    let animationId = null;
+    let lastTranslate = 0;
+    let velocity = 0;
+    let lastTime = 0;
+    let lastX = 0;
     
-    // 모바일 감지 (모바일과 태블릿 모두 포함)
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+    // 모바일 감지
+    const isMobile = window.innerWidth <= 1024;
     
-    if (!isMobile) {
-        sliderTrack.classList.add('draggable');
-        return; // 모바일이 아니면 터치 기능 비활성화
+    // 카드 너비 계산
+    function getCardWidth() {
+        const firstCard = sliderTrack.querySelector('.bread-card');
+        if (firstCard) {
+            const style = window.getComputedStyle(firstCard);
+            const width = firstCard.offsetWidth;
+            const gap = parseInt(window.getComputedStyle(sliderTrack).gap) || 20;
+            return width + gap;
+        }
+        return 250; // 기본값
     }
     
-    // 현재 transform 값 가져오기
-    function getCurrentTranslate() {
-        const computedStyle = window.getComputedStyle(sliderTrack);
-        const matrix = computedStyle.transform;
+    // 전체 트랙 너비 계산
+    function getTotalWidth() {
+        const cards = sliderTrack.querySelectorAll('.bread-card');
+        const cardWidth = getCardWidth();
+        return cards.length * cardWidth;
+    }
+    
+    // 자동 슬라이드 애니메이션
+    function startAutoSlide() {
+        if (isDragging || !sliderTrack.classList.contains('auto-slide')) return;
         
-        if (matrix && matrix !== 'none') {
-            const matrixType = matrix.includes('3d') ? '3d' : '2d';
-            if (matrixType === '3d') {
-                const matrixValues = matrix.match(/matrix3d\((.+)\)/)[1].split(', ');
-                return parseFloat(matrixValues[12]) || 0;
-            } else {
-                const matrixValues = matrix.match(/matrix\((.+)\)/)[1].split(', ');
-                return parseFloat(matrixValues[4]) || 0;
+        const totalWidth = getTotalWidth();
+        const halfWidth = totalWidth / 2;
+        const speed = isMobile ? 2 : 1; // 모바일이면 더 빠르게 (픽셀/프레임)
+        
+        function animate() {
+            if (isDragging || !sliderTrack.classList.contains('auto-slide')) {
+                return;
             }
+            
+            translateX -= speed;
+            lastTranslate = translateX;
+            
+            // 절반 지나면 처음으로 리셋
+            if (Math.abs(translateX) >= halfWidth) {
+                translateX = 0;
+                lastTranslate = 0;
+            }
+            
+            sliderTrack.style.transform = `translateX(${translateX}px)`;
+            animationId = requestAnimationFrame(animate);
         }
-        return 0;
+        
+        animationId = requestAnimationFrame(animate);
     }
     
     // 터치 시작
-    function touchStart(e) {
-        if (e.type === 'touchstart') {
-            startX = e.touches[0].clientX;
-        } else {
-            startX = e.clientX;
-            e.preventDefault();
+    function handleStart(e) {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        
+        startX = clientX;
+        lastX = clientX;
+        lastTime = Date.now();
+        isDragging = true;
+        velocity = 0;
+        
+        // 자동 슬라이드 중지
+        sliderTrack.classList.remove('auto-slide');
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
         }
         
-        // 현재 위치 저장
-        initialTranslate = getCurrentTranslate();
-        
-        isDragging = true;
-        sliderTrack.classList.add('dragging');
-        
-        // 애니메이션 일시 정지 및 현재 위치 고정
-        sliderTrack.style.animationPlayState = 'paused';
-        sliderTrack.style.transform = `translateX(${initialTranslate}px)`;
-    }
-    
-    // 터치 이동
-    function touchMove(e) {
-        if (!isDragging) return;
-        
-        if (e.type === 'touchmove') {
-            currentX = e.touches[0].clientX;
-        } else {
-            currentX = e.clientX;
-            if (e.cancelable) {
-                e.preventDefault();
+        // 현재 위치 가져오기
+        const computedStyle = window.getComputedStyle(sliderTrack);
+        const matrix = computedStyle.transform;
+        if (matrix && matrix !== 'none') {
+            const values = matrix.match(/matrix.*\((.+)\)/);
+            if (values) {
+                const nums = values[1].split(', ');
+                translateX = parseFloat(nums[4] || nums[12] || 0);
+                lastTranslate = translateX;
             }
         }
         
-        const diff = currentX - startX;
-        currentTranslate = initialTranslate + diff;
+        sliderTrack.classList.add('dragging');
         
-        // 실시간으로 이동
-        sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+        if (!e.touches) {
+            e.preventDefault();
+        }
+    }
+    
+    // 터치 이동
+    function handleMove(e) {
+        if (!isDragging) return;
+        
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const currentTime = Date.now();
+        const deltaTime = currentTime - lastTime;
+        
+        if (deltaTime > 0) {
+            velocity = (clientX - lastX) / deltaTime;
+        }
+        
+        currentX = clientX;
+        const diff = currentX - startX;
+        translateX = lastTranslate + diff;
+        
+        sliderTrack.style.transform = `translateX(${translateX}px)`;
+        
+        lastX = clientX;
+        lastTime = currentTime;
+        
+        if (!e.touches && e.cancelable) {
+            e.preventDefault();
+        }
     }
     
     // 터치 종료
-    function touchEnd() {
+    function handleEnd() {
         if (!isDragging) return;
         
         isDragging = false;
+        lastTranslate = translateX;
         sliderTrack.classList.remove('dragging');
         
-        // 현재 위치에서 애니메이션 재시작
-        // CSS 애니메이션을 다시 시작하기 위해 transform을 제거하고
-        // 애니메이션을 재시작
-        const finalTranslate = currentTranslate;
+        // 관성 효과 (선택사항)
+        // velocity를 사용하여 관성 스크롤 구현 가능
         
-        // 애니메이션을 재시작하기 위해 transform 제거
-        sliderTrack.style.transform = '';
-        
-        // 애니메이션 재시작
-        requestAnimationFrame(() => {
-            sliderTrack.style.animationPlayState = 'running';
-        });
+        // 자동 슬라이드 재시작
+        setTimeout(() => {
+            sliderTrack.classList.add('auto-slide');
+            startAutoSlide();
+        }, 100);
     }
     
     // 이벤트 리스너 추가
-    sliderTrack.addEventListener('touchstart', touchStart, { passive: true });
-    sliderTrack.addEventListener('touchmove', touchMove, { passive: false });
-    sliderTrack.addEventListener('touchend', touchEnd, { passive: true });
+    sliderTrack.addEventListener('touchstart', handleStart, { passive: true });
+    sliderTrack.addEventListener('touchmove', handleMove, { passive: false });
+    sliderTrack.addEventListener('touchend', handleEnd, { passive: true });
+    sliderTrack.addEventListener('touchcancel', handleEnd, { passive: true });
     
-    // 마우스 이벤트도 추가 (데스크톱에서도 드래그 가능하게)
-    sliderTrack.addEventListener('mousedown', touchStart);
-    sliderTrack.addEventListener('mousemove', touchMove);
-    sliderTrack.addEventListener('mouseup', touchEnd);
-    sliderTrack.addEventListener('mouseleave', touchEnd);
+    // 마우스 이벤트 (데스크톱)
+    sliderTrack.addEventListener('mousedown', handleStart);
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mouseup', handleEnd);
+    
+    // 자동 슬라이드 시작
+    sliderTrack.classList.add('auto-slide');
+    startAutoSlide();
+    
+    // 호버 시 일시정지 (데스크톱)
+    if (!isMobile) {
+        sliderTrack.addEventListener('mouseenter', () => {
+            sliderTrack.classList.remove('auto-slide');
+        });
+        sliderTrack.addEventListener('mouseleave', () => {
+            sliderTrack.classList.add('auto-slide');
+            startAutoSlide();
+        });
+    }
 }
