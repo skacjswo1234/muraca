@@ -10,6 +10,12 @@ body {
     background-color: #FFF8E7;
 }
 
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 80px;
+    }
+}
+
 .container {
     max-width: 1920px;
     margin: 0 auto;
@@ -306,6 +312,12 @@ body {
     z-index: 1;
 }
 
+@media (max-width: 768px) {
+    .hero-section {
+        overflow: visible;
+    }
+}
+
 .hero-background {
     position: absolute;
     top: 0;
@@ -333,6 +345,13 @@ body {
     backface-visibility: hidden;
     transform: translateZ(0);
     will-change: opacity;
+    filter: blur(0);
+}
+
+@media (max-width: 768px) {
+    .hero-slide {
+        filter: blur(2px);
+    }
 }
 
 /* 모바일에서 이미지에 딱 맞게 조정 */
@@ -340,7 +359,7 @@ body {
     .hero-section {
         height: auto;
         min-height: auto;
-        max-height: 100vh;
+        max-height: none;
     }
     
     .hero-slide {
@@ -365,6 +384,12 @@ body {
     z-index: 3;
 }
 
+@media (max-width: 768px) {
+    .hero-overlay {
+        background-color: rgba(0, 0, 0, 0.35);
+    }
+}
+
 .hero-content {
     position: relative;
     z-index: 4;
@@ -376,21 +401,34 @@ body {
 }
 
 .hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
     animation: fadeInUp 0.8s ease-out;
+    text-transform: none;
+}
+
+.hero-title .highlight {
+    font-size: 1.2em;
+    color: #F5B700;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 1), 0 0 40px rgba(245, 183, 0, 0.9), 4px 4px 8px rgba(245, 183, 0, 0.7);
+    font-weight: 900;
+    display: inline-block;
+    padding: 0 6px;
+    background-color: rgba(245, 183, 0, 0.25);
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(245, 183, 0, 0.5);
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 40px;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-    letter-spacing: -0.01em;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 45px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.02em;
     animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
@@ -449,23 +487,29 @@ body {
     }
     
     .hero-section {
-        margin-top: 0;
-        min-height: 500px;
-        height: 70vh;
+        margin-top: 100px;
+        min-height: 600px;
+        height: auto;
     }
     
     .hero-content {
-        padding: 100px 20px 0;
+        padding: 50px 20px 120px;
     }
     
     .hero-title {
-        font-size: 2rem;
-        margin-bottom: 15px;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: 900;
+    }
+    
+    .hero-title .highlight {
+        font-size: 1.2em;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 30px;
+        font-size: 1.3rem;
+        margin-bottom: 35px;
+        font-weight: 700;
     }
     
     .hero-button {
@@ -990,7 +1034,7 @@ body {
     }
     
     .section-cta {
-        padding: 60px 0 140px;
+        padding: 60px 0 200px;
     }
     
     .section-cta .section-title {
@@ -1014,16 +1058,27 @@ body {
 
 @media (max-width: 480px) {
     .hero-section {
-        height: 60vh;
-        min-height: 400px;
+        margin-top: 100px;
+        height: auto;
+        min-height: 550px;
+    }
+    
+    .hero-content {
+        padding: 40px 20px 100px;
     }
     
     .hero-title {
-        font-size: 1.6rem;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+    
+    .hero-title .highlight {
+        font-size: 1.2em;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        font-weight: 700;
     }
     
     .hero-button {
@@ -1074,6 +1129,14 @@ body {
     .cta-button {
         padding: 14px 35px;
         font-size: 1rem;
+    }
+    
+    .section-cta {
+        padding: 50px 0 200px;
+    }
+    
+    .hero-content {
+        padding: 80px 20px 60px;
     }
     
     .fixed-chat-button {
