@@ -36,7 +36,7 @@ function initHeroSlider() {
     
     // 모바일에서 이미지 비율 계산하여 높이 조정
     if (isMobile) {
-        const firstImagePath = `images/h-1-m.png`;
+        const firstImagePath = `images/h-3.png`;
         const img = new Image();
         img.onload = function() {
             const imageRatio = img.height / img.width;
@@ -62,10 +62,10 @@ function initHeroSlider() {
             slide.classList.add('active');
         }
         
-        // 모바일이면 -m.png (h-1-m, h-2-m만), PC면 .png (h-1 ~ h-4)
+        // 모바일이면 h-3, h-4 사용, PC면 h-1 ~ h-4 사용
         const imagePath = isMobile 
-            ? `images/h-${i}-m.png` 
-            : `images/h-${i}.png`;
+            ? `images/h-${i + 2}.png`  // 모바일: h-3, h-4
+            : `images/h-${i}.png`;     // PC: h-1 ~ h-4
         
         slide.style.backgroundImage = `url('${imagePath}')`;
         heroBackground.appendChild(slide);
@@ -103,7 +103,7 @@ window.addEventListener('resize', function() {
         
         if (isMobile && heroSection) {
             // 모바일에서 이미지 비율로 높이 재계산
-            const firstImagePath = `images/h-1-m.png`;
+            const firstImagePath = `images/h-3.png`;
             const img = new Image();
             img.onload = function() {
                 const imageRatio = img.height / img.width;
