@@ -527,7 +527,7 @@ body {
     }
     
     .logo {
-        height: 80px;
+        height: 70px;
     }
     
     .header .container {
@@ -535,13 +535,13 @@ body {
     }
     
     .hero-section {
-        margin-top: 100px;
-        min-height: 600px;
+        margin-top: 0;
+        min-height: 540px;
         height: auto;
     }
     
     .hero-content {
-        padding: 40px 18px 80px;
+        padding: 32px 18px 70px;
         max-width: 540px;
     }
     
@@ -1033,8 +1033,8 @@ body {
 }
 
 .button-icon {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     display: block;
     object-fit: contain;
 }
@@ -1091,6 +1091,15 @@ body {
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
+    .header {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .header.scrolled {
+        background-color: rgba(107, 62, 38, 0.85);
+    }
+
     .scroll-top-button {
         right: 18px;
         bottom: 110px;
@@ -1181,14 +1190,18 @@ body {
         font-size: 22px;
     }
 
+    .logo {
+        height: 60px;
+    }
+
     .hero-section {
-        margin-top: 100px;
+        margin-top: 0;
         height: auto;
-        min-height: 550px;
+        min-height: 500px;
     }
     
     .hero-content {
-        padding: 30px 16px 60px;
+        padding: 26px 16px 54px;
     }
     
     .hero-title {
@@ -1264,7 +1277,7 @@ body {
     }
     
     .hero-content {
-        padding: 80px 20px 60px;
+        padding: 60px 18px 52px;
     }
     
     .fixed-chat-button {

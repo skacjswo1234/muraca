@@ -39,7 +39,6 @@ function initHeroImage() {
         const imageRatio = img.height / img.width;
         const sectionWidth = heroSection.offsetWidth || window.innerWidth;
         const calculatedHeight = sectionWidth * imageRatio;
-        
         heroSection.style.height = `${calculatedHeight}px`;
         heroSection.style.minHeight = `${calculatedHeight}px`;
     };
@@ -58,7 +57,6 @@ window.addEventListener('resize', function() {
                 const imageRatio = img.height / img.width;
                 const sectionWidth = heroSection.offsetWidth || window.innerWidth;
                 const calculatedHeight = sectionWidth * imageRatio;
-                
                 heroSection.style.height = `${calculatedHeight}px`;
                 heroSection.style.minHeight = `${calculatedHeight}px`;
             };
