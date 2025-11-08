@@ -1,11 +1,20 @@
 // 헤더 스크롤 이벤트
 window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
+    const scrollTopButton = document.getElementById('scrollTopButton');
     
     if (window.scrollY > 50) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
+    }
+
+    if (scrollTopButton) {
+        if (window.scrollY > 300) {
+            scrollTopButton.classList.add('visible');
+        } else {
+            scrollTopButton.classList.remove('visible');
+        }
     }
 });
 
@@ -21,7 +30,7 @@ function initHeroImage() {
     // h-3.png 이미지만 사용
     const slide = document.createElement('div');
     slide.className = 'hero-slide active';
-    slide.style.backgroundImage = `url('images/h-3.png')`;
+    slide.style.backgroundImage = `url('images/main.png')`;
     heroBackground.appendChild(slide);
     
     // 이미지 비율 계산하여 높이 조정
@@ -34,7 +43,7 @@ function initHeroImage() {
         heroSection.style.height = `${calculatedHeight}px`;
         heroSection.style.minHeight = `${calculatedHeight}px`;
     };
-    img.src = 'images/h-3.png';
+    img.src = 'images/main.png';
 }
 
 // 화면 크기 변경 시 높이 재계산
@@ -99,5 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 히어로 섹션 이미지 초기화
     initHeroImage();
+    
+    const scrollTopButton = document.getElementById('scrollTopButton');
+    if (scrollTopButton) {
+        scrollTopButton.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });
 
