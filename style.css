@@ -495,19 +495,10 @@ body {
 .hero-kakao-bubble {
     width: 360px;
     max-width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 0 40px;
     display: block;
     filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.28));
-    animation: bubbleFloat 4s ease-in-out infinite;
-}
-
-@keyframes bubbleFloat {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-6px);
-    }
+    animation: none;
 }
 
 .hero-title {
@@ -668,7 +659,8 @@ body {
     
     .hero-kakao-bubble {
         width: 320px;
-        margin: 18px auto 0;
+        margin: 18px auto 0 24px;
+        animation: none;
     }
 }
 
@@ -1399,7 +1391,8 @@ body {
 
     .hero-kakao-bubble {
         width: 300px;
-        margin: 10px auto 0;
+        margin: 10px auto 0 16px;
+        animation: none;
     }
 
     .consulting-links {
