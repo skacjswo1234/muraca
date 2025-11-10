@@ -13,6 +13,7 @@ body {
 @media (max-width: 768px) {
     body {
         padding-bottom: 80px;
+        background-color: #6B3E26;
     }
 }
 
@@ -40,6 +41,21 @@ body {
     align-items: center;
     justify-content: space-between;
     position: relative;
+}
+
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.logo-caption {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #FFF2D8;
+    letter-spacing: -0.02em;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
+    white-space: nowrap;
 }
 
 .header.scrolled {
@@ -476,6 +492,24 @@ body {
     font-weight: 800;
 }
 
+.hero-kakao-bubble {
+    width: 360px;
+    max-width: 90%;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.28));
+    animation: bubbleFloat 4s ease-in-out infinite;
+}
+
+@keyframes bubbleFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
 .hero-title {
     font-size: 4.5rem;
     font-weight: 900;
@@ -555,8 +589,21 @@ body {
         display: flex;
     }
     
+    .logo-wrap {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
     .logo {
         height: 70px;
+    }
+    
+    .logo-caption {
+        font-size: 1.05rem;
+        white-space: nowrap;
+        text-align: left;
     }
     
     .header .container {
@@ -616,11 +663,9 @@ body {
         line-height: 1.6;
     }
     
-    .hero-button {
-        padding: 9px 26px;
-        font-size: 0.92rem;
-        border-radius: 34px;
-        margin-top: 8px;
+    .hero-kakao-bubble {
+        width: 320px;
+        margin: -4px auto 0;
     }
 }
 
@@ -1060,88 +1105,55 @@ body {
 /* 하단 고정 오픈채팅방 버튼 */
 .fixed-chat-button {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    padding: 20px;
-    background: #F5B700;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-size: 1.3rem;
-    font-weight: 700;
-    display: flex;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 18px 34px;
+    background: linear-gradient(140deg, #FFD64D, #FF9C2B);
+    color: #2F1A06;
+    font-size: 1.15rem;
+    font-weight: 800;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    z-index: 999;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    gap: 10px;
+    border-radius: 999px;
     border: none;
+    cursor: pointer;
+    z-index: 1500;
+    box-shadow: 0 18px 40px rgba(255, 156, 43, 0.45);
+    animation: chatBlink 1.6s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
 }
 
 .fixed-chat-button:hover {
-    background: #FFA84D;
-    transform: translateY(-3px);
-    box-shadow: 0 -6px 30px rgba(255, 168, 77, 0.4);
+    animation-play-state: paused;
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 22px 46px rgba(255, 156, 43, 0.55);
 }
 
 .button-icon {
-    width: 44px;
-    height: 44px;
-    display: block;
-    object-fit: contain;
+    font-size: 1.35rem;
 }
 
 .button-text {
-    line-height: 1;
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
-.scroll-top-button {
-    position: fixed;
-    right: 32px;
-    bottom: 120px;
-    width: 68px;
-    height: 68px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #F9C938, #F4A300);
-    box-shadow: 0 12px 30px rgba(244, 163, 0, 0.35);
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    pointer-events: none;
-    z-index: 1000;
-    overflow: hidden;
+@keyframes chatBlink {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 18px 40px rgba(255, 156, 43, 0.45);
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 22px 48px rgba(255, 156, 43, 0.6);
+        transform: translateX(-50%) scale(1.05);
+    }
 }
 
-.scroll-top-button::before {
-    content: '↑';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -56%);
-    color: #3B2A14;
-    font-size: 32px;
-    font-weight: 800;
-    text-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-}
-
-.scroll-top-button.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-
-.scroll-top-button:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 16px 34px rgba(244, 163, 0, 0.45);
-}
-
-.scroll-top-button:active {
-    transform: translateY(-1px) scale(0.97);
-}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
@@ -1227,8 +1239,9 @@ body {
     }
     
     .fixed-chat-button {
-        padding: 16px 15px;
-        font-size: 1.1rem;
+        bottom: 18px;
+        padding: 16px 26px;
+        font-size: 1.05rem;
     }
 }
 
@@ -1244,10 +1257,20 @@ body {
         font-size: 22px;
     }
 
+    .logo-wrap {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+    
     .logo {
         height: 60px;
     }
 
+    .logo-caption {
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
     .hero-section {
         margin-top: 0;
         height: 100vh;
@@ -1327,6 +1350,17 @@ body {
         font-size: 1.1rem;
         max-width: 100%;
         margin-top: 30px;
+    }
+    
+    .fixed-chat-button {
+        bottom: 16px;
+        padding: 14px 24px;
+        font-size: 0.98rem;
+    }
+
+    .hero-kakao-bubble {
+        width: 300px;
+        margin: 0 auto;
     }
     
     .consulting-links {
