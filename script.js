@@ -27,10 +27,10 @@ function initHeroImage() {
     // 기존 내용 제거
     heroBackground.innerHTML = '';
     
-    // h-3.png 이미지만 사용
+    // bg.png 이미지만 사용
     const slide = document.createElement('div');
     slide.className = 'hero-slide active';
-    slide.style.backgroundImage = `url('images/main.png')`;
+    slide.style.backgroundImage = `url('images/bg.png')`;
     heroBackground.appendChild(slide);
     
     // 이미지 비율 계산하여 높이 조정
@@ -39,10 +39,11 @@ function initHeroImage() {
         const imageRatio = img.height / img.width;
         const sectionWidth = heroSection.offsetWidth || window.innerWidth;
         const calculatedHeight = sectionWidth * imageRatio;
-        heroSection.style.height = `${calculatedHeight}px`;
-        heroSection.style.minHeight = `${calculatedHeight}px`;
+        const targetHeight = Math.max(calculatedHeight, window.innerHeight);
+        heroSection.style.height = `${targetHeight}px`;
+        heroSection.style.minHeight = `${targetHeight}px`;
     };
-    img.src = 'images/main.png';
+    img.src = 'images/bg.png';
 }
 
 // 화면 크기 변경 시 높이 재계산
@@ -57,10 +58,11 @@ window.addEventListener('resize', function() {
                 const imageRatio = img.height / img.width;
                 const sectionWidth = heroSection.offsetWidth || window.innerWidth;
                 const calculatedHeight = sectionWidth * imageRatio;
-                heroSection.style.height = `${calculatedHeight}px`;
-                heroSection.style.minHeight = `${calculatedHeight}px`;
+                const targetHeight = Math.max(calculatedHeight, window.innerHeight);
+                heroSection.style.height = `${targetHeight}px`;
+                heroSection.style.minHeight = `${targetHeight}px`;
             };
-            img.src = 'images/h-3.png';
+            img.src = 'images/bg.png';
         }
     }, 250);
 });
