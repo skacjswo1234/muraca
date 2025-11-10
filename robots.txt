@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://29cdc94d.muraca.pages.dev/sitemap.xml
+Sitemap: https://xn--oi2bn4ep9cp9l8ph50c.com/sitemap.xml
 
