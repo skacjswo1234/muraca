@@ -603,15 +603,15 @@ body {
     
     .hero-section {
         margin-top: 0;
-        padding-top: 108px;
-        padding-bottom: 110px;
+        padding-top: 120px;
+        padding-bottom: 120px;
         min-height: 100vh;
         height: auto;
         align-items: flex-start;
     }
     
     .hero-content {
-        padding: 0 16px 24px;
+        padding: 28px 16px 28px;
         max-width: 540px;
     }
     
@@ -635,11 +635,11 @@ body {
     
     .hero-card {
         padding: 14px 18px;
-        margin-top: -6px;
-        margin-bottom: 14px;
+        margin-top: 0;
+        margin-bottom: 28px;
         border-radius: 28px;
         width: 100%;
-        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
     }
     
     .hero-card-title {
@@ -653,13 +653,13 @@ body {
     }
     
     .hero-card-list li {
-        font-size: 0.98rem;
-        line-height: 1.5;
+        font-size: 0.95rem;
+        line-height: 1.45;
     }
     
     .hero-kakao-bubble {
         width: 320px;
-        margin: 18px 0 0 12px;
+        margin: 0 0 0 16px;
         animation: none;
     }
 }
@@ -1300,58 +1300,59 @@ body {
     }
     .hero-section {
         margin-top: 0;
-        padding-top: 88px;
-        padding-bottom: 102px;
+        padding-top: 104px;
+        padding-bottom: 104px;
         height: auto;
         min-height: 100vh;
         align-items: flex-start;
     }
     
     .hero-content {
-        padding: 0 14px 16px;
+        padding: 24px 12px 24px;
     }
     
     .hero-title {
-        font-size: 1.65rem;
+        font-size: 1.5rem;
         font-weight: 800;
-        line-height: 1.2;
+        line-height: 1.18;
+        margin-bottom: 14px;
     }
     
     .hero-title .highlight {
-        font-size: 0.98em;
+        font-size: 0.95em;
     }
     
     .hero-subtitle {
-        font-size: 0.98rem;
+        font-size: 0.92rem;
         font-weight: 600;
-        line-height: 1.35;
-        margin-bottom: 16px;
+        line-height: 1.32;
+        margin-bottom: 14px;
     }
     
     .hero-card {
         padding: 12px 12px;
-        margin-top: -36px;
-        margin-bottom: 8px;
+        margin-top: 0;
+        margin-bottom: 24px;
         border-radius: 22px;
         box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
     }
     
     .hero-card-title {
-        font-size: 1.22rem;
-        margin-bottom: 16px;
+        font-size: 1.18rem;
+        margin-bottom: 14px;
         text-underline-offset: 4px;
     }
     
     .hero-card-list li {
-        font-size: 0.96rem;
-        line-height: 1.5;
+        font-size: 0.92rem;
+        line-height: 1.45;
     }
     
     .hero-button {
         padding: 8px 20px;
-        font-size: 0.82rem;
-        border-radius: 24px;
-        margin-top: 6px;
+        font-size: 0.8rem;
+        border-radius: 22px;
+        margin-top: 4px;
     }
     
     .section {
@@ -1391,7 +1392,7 @@ body {
 
     .hero-kakao-bubble {
         width: 300px;
-        margin: 10px 0 0 8px;
+        margin: 0 0 0 8px;
         animation: none;
     }
 
@@ -1416,7 +1417,7 @@ body {
     }
     
     .hero-content {
-        padding: 0 14px 20px;
+        padding: 24px 12px 24px;
     }
     
     .fixed-chat-button {
