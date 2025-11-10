@@ -420,7 +420,7 @@ body {
 .hero-card {
     display: inline-block;
     padding: 58px 74px;
-    margin: -24px auto 42px;
+    margin: -160px auto 42px;
     background-color: rgba(63, 34, 18, 0.96);
     border-radius: 64px;
     box-shadow: 0 36px 78px rgba(0, 0, 0, 0.4);
