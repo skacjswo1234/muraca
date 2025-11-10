@@ -1165,7 +1165,10 @@ body {
 }
 
 .button-icon {
-    font-size: 1.35rem;
+    width: 42px;
+    height: 42px;
+    display: inline-block;
+    object-fit: contain;
 }
 
 .button-text {
