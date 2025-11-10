@@ -659,7 +659,7 @@ body {
     
     .hero-kakao-bubble {
         width: 320px;
-        margin: 18px auto 0 24px;
+        margin: 18px 0 0 12px;
         animation: none;
     }
 }
@@ -1391,7 +1391,7 @@ body {
 
     .hero-kakao-bubble {
         width: 300px;
-        margin: 10px auto 0 16px;
+        margin: 10px 0 0 8px;
         animation: none;
     }
 
